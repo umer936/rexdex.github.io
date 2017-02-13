@@ -1,0 +1,16 @@
+title: RexDex's personal page
+email: rexdexpl@gmail.com
+description: My personal source code repository, enjoy!
+baseurl: ""
+url: "http://rexdex.pl"
+github_username:  rexdex
+repository: "rexdex/rexdex.github.io"
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-midnight
+gems:
+  - jekyll-feed
+exclude:
+  - Gemfile
+  - Gemfile.lock

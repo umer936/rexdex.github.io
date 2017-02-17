@@ -1,0 +1,44 @@
+---
+layout: default
+title: Rex Dex's Projects
+display_title: false
+permalink: /projects/
+---
+
+<section class="standalone">
+  <div class="grid">
+
+    <div class="unit whole">
+
+		{% assign projectroots = site.pages | where_exp:"item", "item.project_index" %}
+
+		<div class="projectheader">
+			<div class="title">
+				<h2>Projects</h2>
+			</div>
+		</div>
+		
+		<div class="articlelist">
+		{% for page in projectroots %}
+			<div class="article">
+				<h2>
+					{{ page.title }}
+					<a href="{{ page.url }}" class="permalink" title="Permalink">∞</a>
+				</h2>
+				<div class="post-content">
+					<div class="grid">	
+						<div class="unit one-third center-on-mobiles">		  
+							<a href="{{ page.url }}"><img class="project_preview" src="{{ page.project_logo }}"></a>
+						</div>
+						<div class="unit two-thirds center-on-mobiles">
+							{{ page.project_info| markdownify }}
+						</div>
+						<div class="clear"/>
+					</div>
+				</div>		
+			</div>
+		</div>
+		{% endfor %}
+		
+	</div>
+</section>

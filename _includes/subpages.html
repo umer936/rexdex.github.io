@@ -1,0 +1,15 @@
+{% assign subpages = site.pages | where_exp:"item", "item.project_root == page.project_root" | where_exp:"item", "item.project_index != true" %}
+{% if subpages.size > 0 %}
+<div class="projectdetails">
+	<h2>Details</h2>
+	
+	<ul class="posts">
+		{% for subpage in site.pages  %}
+			{% if subpage.project_root == page.project_root and  subpage.project_index != true %}				
+				<li><a href="{{ subpage.url }}">{{ subpage.title }}</a></li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+	
+</div>			
+{% endif %}

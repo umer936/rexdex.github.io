@@ -1,0 +1,73 @@
+---
+layout: default
+---
+
+<section class="standalone">
+  
+  <div class="grid">
+
+    <div class="unit whole">
+
+      <div class="page">	
+	  
+		{% assign subpages = site.pages | where_exp:"item", "item.project_root == page.project_root" | where_exp:"item", "item.project_index != true" %}
+		
+		{% for subpage in site.pages %}
+			{% if subpage.project_root == page.project_root %}
+				{% if subpage.project_index %}
+					{% assign rootpage = subpage %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+
+		{% if rootpage %}
+			<div class="projectheader">
+				<div class="title">
+					{% if page.url == rootpage.url %}
+						<a href="/projects/{{ page.project_root }}/"><h2>{{ rootpage.title }}</h2></a>
+					{% else %}
+						<a href="/projects/{{ page.project_root }}/"><h2>{{ rootpage.title }} - {{ page.title }}</h2></a>
+					{% endif %}					
+				</div>
+				
+				<div class="btns">
+					{% for subpage in subpages %}
+						{% if subpage.url == page.url %}
+						
+							{% if forloop.first %}
+								<span class="prev disabled">Back</span>
+							{% else %}
+								{% assign previous = forloop.index0 | minus: 1 %}
+								{% assign previous_page = subpages[previous].url %}
+								<a href="{{ previous_page }}" class="prev">Back</a>
+							{% endif %}
+							
+							{% if forloop.last %}
+								<span class="next disabled">Next</span>
+							{% else %}
+								{% assign next = forloop.index0 | plus: 1 %}
+								{% assign next_page = subpages[next].url %}
+								<a href="{{ next_page }}" class="next">Next</a>
+							{% endif %}
+
+							{% break %}
+						{% endif %}
+					{% endfor %}				
+				</div>
+				
+			    <div class="clear"></div>
+			</div>
+		{% endif %}
+	  
+        <div class="content">	
+		
+			{{ content }}
+		
+		</div>
+      </div>
+    </div>
+
+    <div class="clear"></div>
+
+  </div>
+</section>

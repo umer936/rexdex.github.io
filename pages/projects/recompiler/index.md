@@ -5,34 +5,34 @@ permalink: /projects/recompiler/
 project_root: recompiler
 project_logo: /images/projects/xbox_remcompiler.jpg
 project_index: true
-project_info: "What if you could take the Xbox360 executable and run it on your PC? I mad this project as a Proof Of Concept that this can be indeed done. It's far from being anything practical and honestly, it's not marketable in any way ATM but its still a lot of fun"
+project_info: "What if you could take an Xbox360 executable and run it on your PC? I made this project as a Proof of Concept that this can indeed be done. It's far from being anything practical, and honestly, it's not marketable in any way ATM but it's still a lot of fun"
 ---
 
 ## Story of porting Xbox360 executables to Windows
 
-The idea is simple: *what if you could take the Xbox360 game and run it on your PC?* Is this even possible in principle? I was pondering this question few years ago and that should not come as a supprise that there are some obvious technical difficulties in getting this done:
+The idea is simple: *what if you could take an Xbox360 game and run it on your PC?* Is this even possible in principle? I was pondering this question a few years ago and it should not come as a surprise that there are some obvious technical difficulties in getting this done:
 
-- **Different CPUs** - Xbox360 uses PowerPC based CPU, our PCs are based on x86 architexture. They are different in so many ways that I don't even know where to start :) PowerPC is RISC based, has shitloads of registers but very simple instructions. x86 is totally different on the other hand - not so many registers and many more instructions that are more complicated (addressing modes...). It's obvious that a simple transcription is not feasible.
+- **Different CPUs** - Xbox360 uses a PowerPC based CPU, our PCs are based on x86 architecture. They are different in so many ways that I don't even know where to start :) PowerPC is RISC based, has shitloads of registers but very simple instructions. x86 is totally different on the other hand - not so many registers and many more instructions that are more complicated (addressing modes...). It's obvious that a simple transcription is not feasible.
 
 - **Memory Layout** - Xbox360 uses BigEndian byte ordering, x86 CPUs use LittleEndian. To be compatible with incoming data that is being read from files and read/written into the memory all memory based operands must be byteswapped. This may pose a significant performance issue.
 
-- **Encrypted executable image** - Yup, for various reasons the executables on Xbox360 are encrypted. There are some cleaver guys in Russia though that figured how :)
+- **Encrypted executable image** - Yup. For various reasons, the executables for Xbox360 are encrypted. There are some clever guys in Russia though that figured that out :)
 
-- **Different and outdated GPU architecture** - If we want to see any graphics rendered the GPU needs to be emulated. Ther are two hard nuts to crack: first, the shaders we see will be complied into the GPU compatible format, no HLSL on input, sorry. Those shaders will have to be reverse engineered as well. Secondly, the Xbox360 GPU was using ~10MB of internal memory called EDRAM that was serving as a temporary storage of render target for the duration of rendering. Although some card today still use similar concept this is never exposed directly to the user. Since there a lot of differnt ways people used the EDRAM on Xbox this part has to be emulated. To be honest probably differently for every game.
+- **Different and outdated GPU architecture** - If we want to see any graphics rendered, the GPU needs to be emulated. There are two hard nuts to crack: first, the shaders we see will be complied into the GPU compatible format. No HLSL on input, sorry. Those shaders will have to be reverse engineered as well. Secondly, the Xbox360 GPU was using ~10MB of internal memory called EDRAM that was serving as a temporary storage of render target for the duration of rendering. Although some cards today still use a similar concept, this is never exposed directly to the user. Since there are a lot of different ways people used the EDRAM on Xbox, this part has to be emulated. To be honest, it's probably implemented differently for every game.
 
-- **Inlining of graphics/kernel functions** - Some of the functions used while compiling the executable were inlined directly into the compiled code making it much harder to write a simple API level wrapper. This kills the dream of making "function level" wrapper where we could just go and wrap the "d3d->DrawPrimitive" call directly. Nope, this is not going ot happen.
+- **Inlining of graphics/kernel functions** - Some of the functions used while compiling the executable were inlined directly into the compiled code, making it much harder to write a simple API level wrapper. This kills the dream of making a "function level" wrapper where we could just go and wrap the "d3d->DrawPrimitive" call directly. Nope, this is not going to happen.
 
-Forunatelly, every problem is solvable and the answard is ***YES*** in principle. If you want to know how, keep reading :)
+Fortunately, every problem is solvable and the answer is ***YES*** in principle. If you want to know how, keep reading :)
 
 ## Current state of the project
 
-Currently the published branch of the project allows to run simple Xbox360 demo apps (samples). I've not yet atepmted to run it with any real game as it probably would not work with anything big and serious. Also, on the legal side, this is a fine line because getting anything bigger is tricky as it requires going basically to the Torrent Sites and digging through old Xbox Live Arcace content or pirated game. Xbox360 is not yet an abbandonware :) For the same reason there are no source executables given, you need to get one "from somewhere". Sorry :(
+Currently, the published branch of the project allows to run simple Xbox360 demo apps (samples). I've not yet  to run it with any real game as it probably would not work with anything big and serious. Also, on the legal side, this is a fine line because getting anything bigger is tricky as it requires basically going to torrent sites and digging through old Xbox Live Arcade content or pirated games. The Xbox360 is not yet abandonware :) For the same reason, there are no source executables given, you'd need to get one "from somewhere". Sorry :(
 
 Stuff currently implemented:
 
 ***Backend*** (offline processing):
 
-+ XEX image loading, decryption and decompression
++ XEX image loading, decryption, and decompression
 + PowerPC instruction disassembly 
 + Program blocks reconstruction
 + Generation C++ equivalent code for whole executable ("recompilation")
@@ -65,7 +65,7 @@ Stuff currently implemented:
 {% include subpages.html %}
 More pages (Debugging, GPU emulation) are coming.
 
-## How to run it ?
+## How do I run it?
 
 - You will need Visual Studio 2015 (sorry, Windows only)
 - Get the wxWidgets in 3.1.0 and compile the x64 DLL libs, place them in dev\external\wxWidgets-3.1.0\
@@ -73,9 +73,9 @@ More pages (Debugging, GPU emulation) are coming.
 - Run the "framework\frontend" project
 - Open the project "projects\xenon\doplhin\dolphin.px"
 - Select the "Final" configuration
-- Click the "Build button"
-- Assumming you've installed the project in C:\recompiler run the "launcher\frontend" project with following parameters: "-platform=Recompiler.Xenon.Launcher.dll -image=C:\recompiler\projects\xenon\doplhin\Dolphin.px.Final.VS2015.dll -dvd=C:\recompiler\projects\xenon\doplhin\data -devkit=C:\recompiler\projects\xenon\doplhin\data"
-- To exit the app close the GPU output window
+- Click the "Build" button
+- Assuming you've installed the project in C:\recompiler, run the "launcher\frontend" project with following parameters: "-platform=Recompiler.Xenon.Launcher.dll -image=C:\recompiler\projects\xenon\doplhin\Dolphin.px.Final.VS2015.dll -dvd=C:\recompiler\projects\xenon\doplhin\data -devkit=C:\recompiler\projects\xenon\doplhin\data"
+- To exit the app, close the GPU output window
 
 ## References
 
